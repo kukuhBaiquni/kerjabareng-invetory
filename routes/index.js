@@ -7,6 +7,9 @@ let Barang = require('../models/barang')
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get('/products', function(req, res) {
+    res.send({ products: products });
+});
 
 router.get('/list', (req, res) => {
   Barang.find({}).exec((err, val) => {

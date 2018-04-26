@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "nodemon ./bin/www",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -14,5 +15,8 @@
     "mongoose": "^5.0.16",
     "morgan": "~1.9.0",
     "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   }
 }
