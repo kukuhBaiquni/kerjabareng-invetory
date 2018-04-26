@@ -77,7 +77,7 @@
               response.data.forEach(function (data) {
                 tbodyEl.append('\
                   <tr>\
-                    <td class="id"><a href="editjumlah/' + data._id + '"> ' + data._id + '<a></td>\
+                    <td class="id"><a href="editjumlah/' + data._id + '"> '+data._id+'<a></td>\
                     <td class="valnama"> ' + data.nama + '</td>\
                     <td class="tdnama" style="display: none"><input type="text" class="nama form-control" value=" ' + data.nama + ' "></td>\
                     <td class="jumlah"> ' + data.jumlah + '</td>\
@@ -127,11 +127,15 @@
           var rowEl = $(this).closest('tr');
           var id = rowEl.find('.id').text();
           var nama = rowEl.find('.nama').val();
+          id = id.trim();
+
+          console.log(id);
 
           $.ajax({
-            url: '/update/' + id,
+            url: '/update/'+id,
             method: 'PUT',
             contentType: 'application/json',
+            data: JSON.stringify({ nama: nama }),
             success: function (response) {
               console.log(response);
               getData();

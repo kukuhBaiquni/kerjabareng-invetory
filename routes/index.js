@@ -61,12 +61,21 @@ router.post('/add', (req, res) => {
   })
 })
 
-// router.put('/update/:id', function (req, res) {
-//   var id = req.params.id;
-//   var nama = req.body.nama;
+router.put('/update/:id', function (req, res) {
+  var id = req.params.id;
+  var nama = req.body.nama;
 
-//   var found = false;
+  console.log(id, nama);
 
-// })
+  Barang.findOneAndUpdate({ _id: mongoose.Types.ObjectId(id) }, { nama: nama }, function (err, result) {
+    console.log(err);
+    console.log(result);
+    res.json({
+      data: 'Berhasil Update'
+    })
+  })
+
+
+})
 
 module.exports = router;
