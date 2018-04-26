@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var session = require('express-session')
+var passport = require('passport')
+var flash = require('connect-flash')
 
 var app = express();
 
@@ -24,6 +27,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect('mongodb://localhost/inventory', ()=>{
   console.log('connect to mongoose')
 })
+app.use(session({
+  secret: 'manisasampahit',
+  resave: false,
+  saveUnitialized: true
+}))
+require('./passport/passport')(passport)
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
 app.use('/', index);
 app.use('/users', users);
 
@@ -33,7 +46,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
