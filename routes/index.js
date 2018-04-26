@@ -7,10 +7,10 @@ let User = require('../models/user')
 var passport = require('passport')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', isLoggedIn, function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-router.get('/products', function(req, res) {
+router.get('/products', isLoggedIn, function(req, res) {
     res.send({ products: products });
 });
 
@@ -27,7 +27,7 @@ router.get('/list', isLoggedIn, (req, res) => {
   })
 })
 
-router.get('/editjumlah/:id', (req, res) => {
+router.get('/editjumlah/:id', isLoggedIn, (req, res) => {
   Barang.findById(req.params.id, (err, data) => {
     res.render('editjumlah', {
       nama: data.nama,
@@ -37,7 +37,7 @@ router.get('/editjumlah/:id', (req, res) => {
   })
 })
 
-router.get('/delete/:id', (req, res) => {
+router.get('/delete/:id', isLoggedIn,(req, res) => {
   console.log(req.params.id)
   Barang.remove({_id: req.params.id}, (err)=>{
     if(err){
@@ -49,7 +49,7 @@ router.get('/delete/:id', (req, res) => {
   })
 })
 
-router.post('/editjumlah/:id', (req, res) => {
+router.post('/editjumlah/:id', isLoggedIn, (req, res) => {
   let data = {
     nama: req.body.nama,
     jumlah: req.body.jumlah
@@ -62,7 +62,7 @@ router.post('/editjumlah/:id', (req, res) => {
   })
 })
 
-router.post('/add', (req, res) => {
+router.post('/add', isLoggedIn, (req, res) => {
   let data = {
     nama: req.body.nama,
     jumlah: 0
@@ -77,7 +77,7 @@ router.post('/add', (req, res) => {
 })
 
 
-router.put('/update/:id', function (req, res) {
+router.put('/update/:id', isLoggedIn, function (req, res) {
   var id = req.params.id;
   var nama = req.body.nama;
 
@@ -108,7 +108,7 @@ router.post('/login', passport.authenticate('login', {
   if (req.isAuthenticated())
   return next();
 
-  res.redirect('/');
+  res.redirect('/login');
 }
 
 //From Register
