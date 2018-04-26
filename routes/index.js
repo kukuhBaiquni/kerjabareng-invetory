@@ -25,12 +25,34 @@ router.get('/list', (req, res) => {
   })
 })
 
+router.get('/editjumlah/:id', (req, res) => {
+  Barang.findById(req.params.id, (err, data) => {
+    res.render('editjumlah', {
+      nama: data.nama,
+      jumlah: data.jumlah,
+      id: req.params.id
+    })
+  })
+})
+
+router.post('/editjumlah/:id', (req, res) => {
+  let data = {
+    nama: req.body.nama,
+    jumlah: req.body.jumlah
+  }
+  Barang.findById(req.params.id, (err, update) => {
+    update.set(data)
+    update.save(()=>{
+      res.redirect('/')
+    })
+  })
+})
+
 router.post('/add', (req, res) => {
   let data = {
     nama: req.body.nama,
     jumlah: 0
   }
-  console.log(data)
   let barang = new Barang(data)
   barang.save((err, response)=>{
     res.json({
