@@ -164,6 +164,7 @@
           url: '/update/' + id,
           method: 'PUT',
           contentType: 'application/json',
+          data: JSON.stringify({ nama: nama }),
           success: function (response) {
             console.log(response);
             getData();
