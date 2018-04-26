@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 let Barang = require('../models/barang')
+var mongoose = require('mongoose');
 
 
 /* GET home page. */
@@ -16,7 +17,10 @@ router.get('/list', (req, res) => {
     if(err){
       console.log('ga masuk')
     }else{
-      console.log('masuk')
+      // console.log('masuk')
+      res.json({
+        data: val
+      })
     }
   })
 })
@@ -24,7 +28,7 @@ router.get('/list', (req, res) => {
 router.post('/add', (req, res) => {
   let data = {
     nama: req.body.nama,
-    jumlah: req.body.jumlah
+    jumlah: 0
   }
   console.log(data)
   let barang = new Barang(data)
@@ -34,5 +38,13 @@ router.post('/add', (req, res) => {
     })
   })
 })
+
+// router.put('/update/:id', function (req, res) {
+//   var id = req.params.id;
+//   var nama = req.body.nama;
+
+//   var found = false;
+
+// })
 
 module.exports = router;
