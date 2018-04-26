@@ -111,4 +111,24 @@ router.post('/login', passport.authenticate('login', {
   res.redirect('/');
 }
 
+//From Register
+// router.post('/register', (req, res)=>{
+//   let data = {
+//     username: req.body.nama,
+//     password: req.body.password
+//   }
+//   let user = new User(data)
+//   user.save((err)=>{
+//     if(err){
+//       res.json({
+//         status: 'failed'
+//       })
+//     }else{
+//       res.json({
+//         status: 'success'
+//       })
+//     }
+//   })
+// })
+
 module.exports = router;
