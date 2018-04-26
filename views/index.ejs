@@ -115,14 +115,20 @@
           })
         })
 
+      $('table').on('click', '.save-button', function () {
+        var rowEl = $(this).closest('tr');
+        var id = rowEl.find('.id').text();
+        var nama = rowEl.find('.nama').val();
 
-
-        $('table').on('click', '.update-button', function () {
-          var rowEl = $(this).closest('tr');
-          var valnama = rowEl.find('.valnama').hide();
-          var tdnama = rowEl.find('.tdnama').show();
-          var saveButton = rowEl.find('.save-button').show();
-          var updateButton = rowEl.find('.update-button').hide();
+        $.ajax({
+          url: '/update/' + id,
+          method: 'PUT',
+          contentType: 'application/json',
+          data: JSON.stringify({ nama: nama }),
+          success: function (response) {
+            console.log(response);
+            getData();
+          }
         })
 
         $('table').on('click', '.save-button', function () {
