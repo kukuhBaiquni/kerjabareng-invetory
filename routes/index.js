@@ -3,6 +3,8 @@ var router = express.Router();
 let Barang = require('../models/barang')
 var mongoose = require('mongoose');
 
+let User = require('../models/user')
+var passport = require('passport')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -12,7 +14,7 @@ router.get('/products', function(req, res) {
     res.send({ products: products });
 });
 
-router.get('/list', (req, res) => {
+router.get('/list', isLoggedIn, (req, res) => {
   Barang.find({}).exec((err, val) => {
     if(err){
       console.log('ga masuk')
@@ -61,6 +63,7 @@ router.post('/add', (req, res) => {
   })
 })
 
+
 router.put('/update/:id', function (req, res) {
   var id = req.params.id;
   var nama = req.body.nama;
@@ -77,5 +80,22 @@ router.put('/update/:id', function (req, res) {
 
 
 })
+
+router.get('/login', function(req, res, next){
+  res.render('login', {message: req.flash('loginMessage')})
+})
+
+router.post('/login', passport.authenticate('login', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash : true
+  }));
+
+  function isLoggedIn(req, res, next){
+  if (req.isAuthenticated())
+  return next();
+
+  res.redirect('/');
+}
 
 module.exports = router;
