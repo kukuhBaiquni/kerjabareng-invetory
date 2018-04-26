@@ -35,6 +35,18 @@ router.get('/editjumlah/:id', (req, res) => {
   })
 })
 
+router.get('/delete/:id', (req, res) => {
+  console.log(req.params.id)
+  Barang.remove({_id: req.params.id}, (err)=>{
+    if(err){
+      console.log('gagal delete')
+    }else{
+      res.redirect('/')
+      console.log('success delete')
+    }
+  })
+})
+
 router.post('/editjumlah/:id', (req, res) => {
   let data = {
     nama: req.body.nama,
@@ -53,6 +65,7 @@ router.post('/add', (req, res) => {
     nama: req.body.nama,
     jumlah: 0
   }
+  console.log(data)
   let barang = new Barang(data)
   barang.save((err, response)=>{
     res.json({
